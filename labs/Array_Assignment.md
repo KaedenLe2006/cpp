@@ -75,10 +75,86 @@ Array sorted in ascending order:
 - Include your **name**, **course**, and **date** as comments at the top of the file.
 
 ```cpp
-// Name: Your Full Name
+// Name: Kaeden Le
 // Course: CISC 192 - C++ Programming
-// Date: MM/DD/YYYY
+// Date: 10/28/2025
 // Assignment: Non-Duplicated Integer Array Operations
+
+#include <iostream>
+#include <array>
+using namespace std;
+
+int main() {
+    const int N = 5;
+    array<int, N> nums{};
+    int val;
+
+    cout << "Enter " << N << " unique integers:\n";
+    for (int i = 0; i < N; i++) {
+        bool dup;
+        do {
+            dup = false;
+            cout << "Element " << i + 1 << ": ";
+            cin >> val;
+            for (int j = 0; j < i; j++) {
+                if (nums[j] == val) {
+                    cout << "Duplicate found! Enter a different number.\n";
+                    dup = true;
+                    break;
+                }
+            }
+        } while (dup);
+        nums[i] = val;
+    }
+
+    cout << "\nChoose an operation:\n";
+    cout << "1. Sort Ascending\n";
+    cout << "2. Sort Descending\n";
+    cout << "3. Find Maximum\n";
+    cout << "Enter your choice: ";
+
+    int choice;
+    cin >> choice;
+
+    if (choice == 1 || choice == 2) {
+        for (int i = 0; i < N - 1; i++) {
+            for (int j = 0; j < N - i - 1; j++) {
+                bool doSwap = (choice == 1 && nums[j] > nums[j + 1]) ||
+                              (choice == 2 && nums[j] < nums[j + 1]);
+                if (doSwap) {
+                    int t = nums[j];
+                    nums[j] = nums[j + 1];
+                    nums[j + 1] = t;
+                }
+            }
+        }
+    }
+
+    switch (choice) {
+        case 1:
+            cout << "\nArray sorted in ascending order:\n";
+            for (int i = 0; i < N; i++) cout << nums[i] << ' ';
+            cout << '\n';
+            break;
+        case 2:
+            cout << "\nArray sorted in descending order:\n";
+            for (int i = 0; i < N; i++) cout << nums[i] << ' ';
+            cout << '\n';
+            break;
+        case 3: {
+            int m = nums[0];
+            for (int i = 1; i < N; i++)
+                if (nums[i] > m) m = nums[i];
+            cout << "\nMaximum value: " << m << '\n';
+            break;
+        }
+        default:
+            cout << "\nInvalid choice!\n";
+    }
+
+    return 0;
+}
+
 ```
 
 ---
